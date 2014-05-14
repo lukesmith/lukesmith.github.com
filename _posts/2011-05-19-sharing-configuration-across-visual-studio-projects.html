@@ -1,0 +1,17 @@
+---
+layout: post
+title: Sharing configuration across visual studio projects
+categories:
+- Development
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author:
+---
+<p>Whenever creating a new visual studio project I always go through the pain of ensuring certain properties are setup and StyleCop is enabled. It's manual and boring, and not to mention the repetition of the settings not exactly being DRY.</p>
+<p>I can't believe I didn't think of this sooner but one way to get around this is to create a single target file, containing all of the properties and bits you want to run as part of building the project, then all you have to add to each project file is a single import of the target.</p>
+<p><code>&lt;Import Project="$(SolutionDir)\build\common.target" /&gt;</code></p>
+<p>My <a href="https://gist.github.com/980750">common.target</a> can be found on github.</p>
+<p>Next task is to create a simple script to run through all .csproj files in a directory tree and add/update the import element if it's missing.</p>

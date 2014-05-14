@@ -1,0 +1,25 @@
+---
+layout: post
+title: MSBuild Error when building VS2008 Projects
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>I've been playing around with MSBuild and <a href="http://ccnet.thoughtworks.com/">CruiseControl.NET</a> and ran into a problem trying to build projects built using VS2008.</p>
+<blockquote><p><em>File format version is not recognized.  MSBuild can only read solution files between versions 7.0 and 9.0, inclusive.</em></p>
+</blockquote>
+<p>Turned out I was targeting the v2.0.50727 version of MSBuild in the ccnet.config file</p>
+<blockquote><pre class="code"><span style="color:blue;">&lt;</span><span style="color:#a31515;">tasks</span><span style="color:blue;">&gt;
+  &lt;</span><span style="color:#a31515;">msbuild</span><span style="color:blue;">&gt;
+    &lt;</span><span style="color:#a31515;">executable</span><span style="color:blue;">&gt;</span>C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\MSBuild.exe<span style="color:blue;">&lt;/</span><span style="color:#a31515;">executable</span><span style="color:blue;">&gt;</span></pre>
+</blockquote>
+<p>Rather than the 3.5 version</p>
+<blockquote>
+<pre class="code"><span style="color:blue;">&lt;</span><span style="color:#a31515;">tasks</span><span style="color:blue;">&gt;
+  &lt;</span><span style="color:#a31515;">msbuild</span><span style="color:blue;">&gt;
+    &lt;</span><span style="color:#a31515;">executable</span><span style="color:blue;">&gt;</span>C:\Windows\Microsoft.NET\Framework\v3.5\MSBuild.exe<span style="color:blue;">&lt;/</span><span style="color:#a31515;">executable</span><span style="color:blue;">&gt;</span></pre>
+</blockquote>

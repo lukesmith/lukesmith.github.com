@@ -1,0 +1,23 @@
+---
+layout: post
+title: MIME Error with ASPNET under Vista (IIS7)
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>Problem:</p>
+<h4><em>HTTP Error 404.3 - Not Found</em></h4>
+<p><strong>Description:</strong> The page you are requesting cannot be served because of the Multipurpose<br />
+Internet Mail Extensions (MIME) map policy that is configured on the Web server. The<br />
+page you requested has a file name extension that is not recognized, and is not allowed.</p>
+<p><strong>Error Code:</strong> 0x80070032</p>
+<p><strong>Notification:</strong> ExecuteRequestHandler</p>
+<p><strong>Module:</strong> StaticFileModule</p>
+<p>Fix:</p>
+<p>Turn on the 'Application Development Features' of IIS under Windows features.</p>
+<p><a href="http://blog.lukesmith.net/wp-content/uploads/images/96c025fcd637_BA13/Capture.jpg"><img title="Capture" alt="Capture" src="http://blog.lukesmith.net/wp-content/uploads/images/96c025fcd637_BA13/Capture_thumb.jpg" /></a></p>
+<p><img height="1" src="http://dasblog.lukesmith.net/aggbug.ashx?id=e823645c-abf2-4a15-946a-c4c3ec362d88" width="1" /></p>

@@ -1,0 +1,66 @@
+---
+layout: post
+title: X10 Macros
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _oembed_6383c56afc1a56ac2210e938443c6b1d: '{{unknown}}'
+  _oembed_4135a6d0cf64eb79a84b97900c4c3568: '{{unknown}}'
+author: 
+---
+<p>
+A few months ago I purchased some X10 modules to automate my house, being able to<br />
+turn the lights on and off with a remote control from bed is probably the greatest<br />
+application so far.</p>
+<p>
+But in the old house I wrote some software which interfaced with a CM12U device; from<br />
+my computer I was able to send commands via RS232 serial communication to the powerlines<br />
+in the house and so onto the modules planted around the house. Being a geek I made<br />
+it easy to make and run any macro (using the wonders of XML), a set of commands run<br />
+in order to set any number of X10 modules. Movie mode was the best; turning off the<br />
+living room light, turning on the lava lamp, and dimming the lamp to a preset value<br />
+(defined in the macro).</p>
+<p><font color="#0000ff" size="2"></p>
+<p>
+&lt;?</p>
+<p></font><font color="#800000" size="2">xml</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">version</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">1.0</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">encoding</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">utf-8</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">?&gt;<br />
+&lt;</font><font color="#800000" size="2">Macro</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">xmlns:xsi</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">http://www.w3.org/2001/XMLSchema-instance</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">xmlns:xsd</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">http://www.w3.org/2001/XMLSchema</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">&gt;<br />
+   &lt;</font><font color="#800000" size="2">Name</font><font color="#0000ff" size="2">&gt;</font><font color="#000000" size="2">Movie<br />
+mode</font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">Name</font><font color="#0000ff" size="2">&gt;<br />
+   &lt;</font><font color="#800000" size="2">Description</font><font color="#0000ff" size="2">&gt;</font><font color="#000000" size="2">Turns<br />
+the lava lamp on, the main light off and dims the lamp to 13</font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">Description</font><font color="#0000ff" size="2">&gt;<br />
+   &lt;</font><font color="#800000" size="2">Commands</font><font color="#0000ff" size="2">&gt;<br />
+      &lt;</font><font color="#800000" size="2">X10CommandSet</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">HouseCode</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">B</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Device</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">Three</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">&gt;<br />
+         &lt;</font><font color="#800000" size="2">DeviceName</font><font color="#0000ff" size="2">&gt;</font><font color="#000000" size="2">Main<br />
+Light</font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">DeviceName</font><font color="#0000ff" size="2">&gt;<br />
+         &lt;</font><font color="#800000" size="2">Functions</font><font color="#0000ff" size="2">&gt;<br />
+            &lt;</font><font color="#800000" size="2">X10FunctionCommand</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Function</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">Off</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Value</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">0</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> /&gt;<br />
+         </font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">Functions</font><font color="#0000ff" size="2">&gt;<br />
+      &lt;/</font><font color="#800000" size="2">X10CommandSet</font><font color="#0000ff" size="2">&gt;<br />
+      &lt;</font><font color="#800000" size="2">X10CommandSet</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">HouseCode</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">B</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Device</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">One</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">&gt;<br />
+         &lt;</font><font color="#800000" size="2">DeviceName</font><font color="#0000ff" size="2">&gt;</font><font color="#000000" size="2">lava<br />
+lamp</font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">DeviceName</font><font color="#0000ff" size="2">&gt;<br />
+         &lt;</font><font color="#800000" size="2">Functions</font><font color="#0000ff" size="2">&gt;<br />
+            &lt;</font><font color="#800000" size="2">X10FunctionCommand</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Function</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">On</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Value</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">0</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> /&gt;<br />
+         </font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">Functions</font><font color="#0000ff" size="2">&gt;<br />
+      &lt;/</font><font color="#800000" size="2">X10CommandSet</font><font color="#0000ff" size="2">&gt;<br />
+      &lt;</font><font color="#800000" size="2">X10CommandSet</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">HouseCode</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">B</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Device</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">Two</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">&gt;<br />
+         &lt;</font><font color="#800000" size="2">DeviceName</font><font color="#0000ff" size="2">&gt;</font><font color="#000000" size="2">lamp</font><font color="#0000ff" size="2">&lt;/</font><font color="#800000" size="2">DeviceName</font><font color="#0000ff" size="2">&gt;<br />
+         &lt;</font><font color="#800000" size="2">Functions</font><font color="#0000ff" size="2">&gt;<br />
+            &lt;</font><font color="#800000" size="2">X10FunctionCommand</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Function</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">On</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Value</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">0</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> /&gt;<br />
+            &lt;</font><font color="#800000" size="2">X10FunctionCommand</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Function</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">Dim</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">Value</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">13</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> /&gt;<br />
+         &lt;/</font><font color="#800000" size="2">Functions</font><font color="#0000ff" size="2">&gt;<br />
+      &lt;/</font><font color="#800000" size="2">X10CommandSet</font><font color="#0000ff" size="2">&gt;<br />
+   &lt;/</font><font color="#800000" size="2">Commands</font><font color="#0000ff" size="2">&gt;<br />
+&lt;/</font><font color="#800000" size="2">Macro</font><font color="#0000ff" size="2">&gt;</font>&gt;</p>
+<p>
+<font color="#0000ff" size="2"><font color="#000000">At the moment the running of the macro's<br />
+isn't very nice. I plan on making a nice GUI, and shunting the actual running of the<br />
+macros to a service so you can configure a single computer to be the server and then<br />
+connect to it from any client (another windows PC, PocketPC or over the web). It will<br />
+give me a chance to play around with WCF (Indigo).</font><br />
+</font></p>
+<p>&gt;<img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=52404dbc-bd0a-4042-91d6-ecead505c8bb" /></p>

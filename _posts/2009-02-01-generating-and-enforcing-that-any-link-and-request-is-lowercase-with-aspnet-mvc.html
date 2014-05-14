@@ -1,0 +1,80 @@
+---
+layout: post
+title: Generating and enforcing that any link and request is lowercase with ASP.NET
+  MVC
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p><em>This post is based off 2 other </em><a href="http://goneale.wordpress.com/2008/12/19/lowercase-route-urls-in-aspnet-mvc/"><em>blog</em></a><em> </em><a href="http://www.makiwa.com/index.php/2008/05/31/lowercase-mvc-route-urls/"><em>posts</em></a><em> I found which helped me come up with my solution with some slight modifications on their code.</em></p>
+<p>For my new project I’m having my URLs all lowercase, as some search engines interpret ‘/Home’ and ‘/home’ as two different locations. So the problem became “how can I enforce all my URLs get rendered as lowercase, and how do I force a request to a URL with an uppercase letter to redirect to the lowercase equivalent?”.</p>
+<p>Because I’m using ASP.NET MVC I needed a way to get the Routing engine to render the URL as lowercase when using an ActionLink. Asking the question over on <a href="http://stackoverflow.com/questions/495006/forcing-actionlinks-to-be-rendered-as-lowercase">stackoverflow</a> I got a solution that involved creating my own class that inherits from Route, which I’ve called LowercaseRoute, and overrides the GetVirtualPath method. I also created a MapLowercaseRoute extension method on the RouteCollection class that allows me to map a LowercaseRoute easily.</p>
+<pre class="brush:csharp">
+public class LowercaseRoute : Route
+{
+public LowercaseRoute(string url, IRouteHandler routeHandler)
+: base(url, routeHandler)
+{
+}
+
+public LowercaseRoute(string url, RouteValueDictionary defaults, IRouteHandler routeHandler)
+: base(url, defaults, routeHandler)
+{
+}
+
+public LowercaseRoute(string url, RouteValueDictionary defaults, RouteValueDictionary constraints, IRouteHandler routeHandler)
+: base(url, defaults, constraints, routeHandler)
+{
+}
+
+public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
+{
+var virtualPath = base.GetVirtualPath(requestContext, values);
+
+if (virtualPath != null)
+{
+virtualPath.VirtualPath = virtualPath.VirtualPath.ToLowerInvariant();
+}
+
+return virtualPath;
+}
+}
+</pre>
+<p>Next up is to ensure that any request to the site is enforced to be lowercased, and perform a 301 redirect if not. For this I’ve created a HttpModule, EnforceLowecaseRequestHttpModule, which I then register in the web.config. I could have put this directly into the global.asax file but I wanted to make it easily reusable on future projects.</p>
+<pre class="brush:csharp">
+public class EnforceLowercaseRequestHttpModule : IHttpModule
+{
+public void Dispose()
+{
+}
+
+public void Init(HttpApplication context)
+{
+context.BeginRequest += context_BeginRequest;
+}
+
+private void context_BeginRequest(object sender, EventArgs e)
+{
+HttpApplication application = (HttpApplication)sender;
+
+// If upper case letters are found in the URL, redirect to lower case URL (keep querystring the same).
+string requestedUrl = ((application.Context.Request.Url.Scheme + "://" + application.Context.Request.Url.Authority + application.Context.Request.Url.AbsolutePath));
+
+if (Regex.IsMatch(requestedUrl, @"[A-Z]") == true)
+{
+string lowercaseUrl = requestedUrl.ToLower();
+lowercaseUrl += HttpContext.Current.Request.Url.Query;
+
+application.Context.Response.Clear();
+application.Context.Response.Status = "301 Moved Permanently";
+application.Context.Response.AddHeader("Location", lowercaseUrl);
+application.Context.Response.End();
+}
+}
+}
+</pre>
+<div id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:e48706f6-baf5-43c5-92b7-fa080c345d41" class="wlWriterEditableSmartContent" style="display:inline;float:none;margin:0;padding:0;">Technorati Tags: <a rel="tag" href="http://technorati.com/tags/lowercase+urls">lowercase urls</a>,<a rel="tag" href="http://technorati.com/tags/asp.net+mvc">asp.net mvc</a>,<a rel="tag" href="http://technorati.com/tags/httpmodule">httpmodule</a>,<a rel="tag" href="http://technorati.com/tags/Routing">Routing</a></div>

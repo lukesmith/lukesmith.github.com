@@ -1,0 +1,26 @@
+---
+layout: post
+title: Debugging XmlSerializer unhelpful exceptions
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I've been getting the following error when trying to serialize an object in .NET</p>
+<blockquote><p><font size="2"></p>
+<p>
+<em>File or assembly name zc1diojb.dll, or one of its dependencies, was not found.</em></p>
+<p></font></p></blockquote>
+<p>
+There is bugger all help given in the exception stack to help debug this problem,<br />
+but I stumbled upon <a href="http://www.sellsbrothers.com/tools/#XmlSerializerPreCompiler" name="XmlSerializerPreCompiler">XmlSerializerPreCompiler</a> by<br />
+Chris Sell's designed to help with these kinds of exceptions. It allowed me to track<br />
+down the problem in a matter of seconds, it turns out I had a few properties marked<br />
+with the <a href="http://msdn2.microsoft.com/en-us/system.obsoleteattribute.aspx">ObsoleteAttribute</a>.<br />
+Adding an <a href="http://msdn2.microsoft.com/en-us/library/system.xml.serialization.xmlignoreattribute.aspx">XmlIgnoreAttribute</a> to<br />
+each of these properties resolved the issue.</p>
+<p>&gt;<img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=7d38f5f4-2f31-4960-a0a1-d2dd5d8d188d" /></p>

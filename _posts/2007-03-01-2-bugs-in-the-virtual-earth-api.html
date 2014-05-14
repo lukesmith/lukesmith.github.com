@@ -1,0 +1,44 @@
+---
+layout: post
+title: 2 bugs in the Virtual Earth API
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+It's not everyday that you find a bug in a piece of Microsoft code, but <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=1290644&amp;SiteID=1">2<br />
+bugs</a> in one day? And those 2 bugs being in the same function? Well I should have<br />
+played the lottery this week.</p>
+<p>
+In the <a href="http://dev.live.com/virtualearth/sdk">Virtual Earth API</a> the VEPushpin.Dipose<br />
+function contains 2 bugs, which are caused through carelessness more than anything<br />
+else (we all make them).</p>
+<p>
+The LOC is:</p>
+<p>
+<em>VEPushpin.prototype.Dispose=function(){this.DetailsStyle==null; this.TitleStyle=null;this.IconStyle=null;this.Details=null;this.IconUrl=null;this.Title=null;this.LatLong=null;this.ID=null;this.m_vemapcontrol=null;this.m_vemap=null</em></p>
+<p>
+ </p>
+<p>
+Taking a quick glance and only one is obvious.</p>
+<p>
+Instead of setting the <em>this.DetailsStyle</em> variable to null, a boolean comparison<br />
+is being performed. When the method is meant to set everything to null what you don't<br />
+expect is somethings to not be nulled.</p>
+<p>
+The second bug is <em>this.IconUrl</em>. Now this could be '100% correct' within this<br />
+function as it has the naming convention of the Virtual Earth API. But when the rest<br />
+of the VEPusphin object appears to use Iconurl as the variable then its a bug. Iconurl<br />
+doesn't get nulled, and a new object variable gets created called IconUrl and set<br />
+to null. I love javascripts <a href="http://eli.thegreenplace.net/2006/11/25/a-taxonomy-of-typing-systems/">strong<br />
+typing</a> (or lack of).</p>
+<p>
+ </p>
+<p>
+Still after finding these bugs and creating my a workaround fix it hasn't fixed the<br />
+memory leak that's occuring.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=d8896af2-87fc-46e5-aff9-1e217b8a5f67" /></p>

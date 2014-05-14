@@ -1,0 +1,21 @@
+---
+layout: post
+title: Unexpected error 0×8ffe2740 occurred in IIS 5.1
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I've been getting 'Unexpected error 0x8ffe2740 occurred' under IIS 5.1 when trying<br />
+to start the website today and just went about fixing it. A quick <a href="http://www.google.co.uk/search?hl=en&amp;q=iis+Unexpected+error+0x8ffe2740+occurred&amp;meta=">google</a> <a href="http://support.microsoft.com/kb/816944">discovered</a> that<br />
+it's due to another application using port 80. I remember having this problem once<br />
+before and the culprit was <a href="http://www.skype.com/">Skype</a>. Closing down<br />
+Skype sorts out the problem.</p>
+<p>
+This <a href="http://weblogs.asp.net/jgalloway/archive/2005/09/20/425693.aspx">post</a> explains<br />
+how to stop Skype from using port 80 if its free.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=7a39ff2a-9c52-4b25-ae9e-04855cb72a78" /></p>

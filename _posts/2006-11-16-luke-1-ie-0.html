@@ -1,0 +1,21 @@
+---
+layout: post
+title: Luke 1, IE 0
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I've been spending the day trying to track down an annoying bug in IE to do with javascript,<br />
+"Internet Explorer cannot open the Internet site http://....", "operation aborted".<br />
+It's all to do with the google maps api I'm working with. It works fine under firefox<br />
+yet I couldn't get the dam thing to work in IE7 (not tried IE6 yet).</p>
+<p>
+The problem was the javascript I wrote was modifying parts of the page before they<br />
+were rendered and IE threw a benny, a simple defer="defer" attribute in the &lt;script<br />
+type="text/javascript"&gt; tag fixes the problem.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=f0d33631-d8b6-49b1-98b1-e01ee1a06b94" /></p>

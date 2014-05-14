@@ -1,0 +1,19 @@
+---
+layout: post
+title: Moving obsolete methods to a partial class
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I just had a sudden brain wave. I've been going through my code library at work tidying<br />
+stuff up and marking some methods as <a href="http://msdn2.microsoft.com/en-us/library/system.obsoleteattribute.aspx">Obsolete</a>,<br />
+but the thing about this is that it leaves obsolete methods in the classes cs file...yukky.<br />
+So my brain wave is to make use of <a href="http://msdn2.microsoft.com/en-us/library/wa80x488.aspx">partial<br />
+classes</a> and move all obsolete methods out of the main class cs file and into a<br />
+myclass.obsolete.cs file.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=73e1434a-bdb6-4f10-bc6c-b43e404d74fc" /></p>

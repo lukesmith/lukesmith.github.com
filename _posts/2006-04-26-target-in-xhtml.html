@@ -1,0 +1,26 @@
+---
+layout: post
+title: Target ‘in’ xhtml
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I've been looking at making my websites more compliant, especially xhtml 1.1, using<br />
+ASP.NET v2.0. To ensure ASP.NET outputs XHTML 1.1 strict html you can add the<br />
+following element into the web.config file</p>
+<p><font color="#0000ff" size="2"></p>
+<p>
+&lt;</p>
+<p></font><font color="#800000" size="2">xhtmlConformance</font><font color="#0000ff" size="2"> </font><font color="#ff0000" size="2">mode</font><font color="#0000ff" size="2">=</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2">Strict</font><font color="#000000" size="2">"</font><font color="#0000ff" size="2"> /&gt;&gt;<br />
+</font></p>
+<p>
+However it doesn't seem to stop the AdRotator control rendering a target attribute<br />
+on an anchor tag. I never knew till today that the target attribute <a href="http://loadaveragezero.com/app/s9y/index.php?/archives/95-Serving-Valid-XHTML-Strict-with-target_blank.html">isn't</a> actually<br />
+in HTML 4.01 Strict, XHTML 1.0 Strict and XHTML 1.1 Strict. So if you use this WebControl<br />
+you can't output Strict html.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=81cd0bae-fd10-41c3-a1bb-34226db0ae9b" /></p>

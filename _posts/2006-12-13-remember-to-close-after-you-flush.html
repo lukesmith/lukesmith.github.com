@@ -1,0 +1,33 @@
+---
+layout: post
+title: Remember to Close() after you Flush()
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I'm not talking about closing the toilet lid (and not just putting the seat down as<br />
+women seem to think is acceptable!).</p>
+<p>
+Anyway...</p>
+<p>
+I've just been pulling my hair out over why a zip file generated using <a href="http://www.icsharpcode.net/OpenSource/SharpZipLib/Default.aspx">SharpZipLib</a> was<br />
+being corrupted when returned from a webpage, saving to disk on the server worked<br />
+flawlessly. The file sent to the client was approximately 7kb larger than the one<br />
+saved on the server.</p>
+<p>
+Now usually I use the using statement to dispose of any objects that use resources<br />
+but for some reason I wasn't calling Response.Close() in my method (<a href="http://msdn2.microsoft.com/en-gb/library/system.io.stream.close.aspx">Close()</a> just<br />
+calls <a href="http://msdn2.microsoft.com/en-gb/library/system.io.stream.dispose.aspx">Dispose(true)</a>).</p>
+<p>
+What's even more annoying is there was the case of "it worked last week, why isn't<br />
+it working anymore???". I don't remember putting Response.Close() in the first place,<br />
+let alone deleting it at somepoint.</p>
+<p>
+So please remember to Close() after you <a href="http://msdn2.microsoft.com/en-gb/library/system.io.stream.flush.aspx">Flush()</a>,<br />
+it's only polite.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=b4b2c63f-a1f0-4f9f-9176-b18bdf4371f0" /></p>

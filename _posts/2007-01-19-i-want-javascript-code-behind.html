@@ -1,0 +1,35 @@
+---
+layout: post
+title: I want javascript code behind
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+ASP.NET provides a great feature, code behind files, where the high level language<br />
+(C#/VB.NET) can sit in a separate file to the UI markup of the page.</p>
+<p>
+But what about Javascript? Well you create a javascript file and shove it in a folder,<br />
+I tend to use /scripts, and then add a script include reference to it, or put the<br />
+javascript within the HTML page. The problem with putting it in an external file<br />
+is you can't use &lt;%= control.UniqueID %&gt; to get the ID of a control<br />
+on that page after its rendered (you would have to 'hardcode' that id). If the javascript<br />
+is with the HTML you can use &lt;% %&gt; as ASP.NET parses it and puts the proper<br />
+ID in place.</p>
+<p>
+Solution? Well what I'd like to see is a javascript code behind, mypage.aspx.js just<br />
+as with a cs code behind. The js file gets automagically included when the page is<br />
+requested and the javascript file is parsed for &lt;% %&gt; and voila. You get the<br />
+caching benefits and maintable code that having an external javascript file gives.</p>
+<p>
+UserControls could use the same approach and add the javascript include to the page.</p>
+<p>
+In debug="false" mode ASP.NET could optimize the javascript too to remove comments<br />
+and un needed formatting reducing the file size.</p>
+<p>
+Any thoughts?</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=13facee1-b9f9-426c-a3b7-83bf0dada178" /></p>

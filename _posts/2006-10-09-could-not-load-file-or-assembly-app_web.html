@@ -1,0 +1,31 @@
+---
+layout: post
+title: Could not load file or assembly App_Web…
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+This morning I had a nice bug to track down, for some reason the intranet web application<br />
+was failing for users in a certain role. I've got an exception handling block which<br />
+is shared amongst all new internal applications (webapps and winforms) which<br />
+allows exceptions to be logged to a server (via .NET Remoting rather than webservices)<br />
+so getting access to the bugger is easy, unless of course the service can't be reached<br />
+and in such case exceptions are logged in the Event Log and unless someone notifies<br />
+me of a problem I have no way of knowing (I could cache the exceptions locally and<br />
+retry at a later time when the service is backup but I never implemented it).</p>
+<p>
+<em>Could not load file or assembly 'App_Web_afcjvzm7, Version=0.0.0.0, Culture=neutral,<br />
+PublicKeyToken=null' or one of its dependencies. The system cannot find the file specified.</em></p>
+<p>
+A quick google search uncovered a <a href="http://forums.asp.net/thread/1271201.aspx">thread</a> on<br />
+aspnet with a fair number of people suffering the same problem, it appears there is<br />
+a <a href="http://support.microsoft.com/kb/915782/en-us">hotfix</a> available which<br />
+is claimed to fix the problem, but noone has verified it does. The only solution in<br />
+the short term seems to be to make a modification to the file thats causing the problem,<br />
+which isn't very practicable in the long run.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=ccbf61df-c7b1-437c-91b4-e2c79fea0d92" /></p>

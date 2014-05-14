@@ -1,0 +1,15 @@
+---
+layout: post
+title: ASP.NET MVC
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>WebForms are the existing technology in ASP.NET for web applications, which have been around since the beginning of ASP.NET. However, despite being mature and having a large developer base they aren’t ‘all that’. It’s been said that WebForms are “web development for VB Developers”, in that the drag ‘n’ drop and double clicking to add an event handler for a button eases the migration from Windows Development to the web. The problem with this is that WebForms brings a state-based system (via ViewState) to the web, that is fundamentally stateless. Added onto this the complex page-life cycle of the WebForms model and the lack of separating of concerns, WebForms isn’t really suitable for building maintainable and testable web applications.</p>
+<p>ASP.NET MVC is built on the ASP.NET framework, so existing WebForms developers can make use of the existing classes and framework knowledge they possess (Forms/Windows Authentication, Membership Roles, Session/Profile state, Health Monitoring etc…). ASP.NET MVC projects also have the added benefit that they can include traditional WebForms pages and User Controls (though I wouldn’t recommend mixing the two if you can help it), so the transition can be made without throwing all your existing pages away.</p>
+<p>By default ASP.NET ships with the WebForms syntax View Engine, however third party view engines can easily be used with a few additions to the web.config file and global.asax. The best ViewEngine I’ve seen is <a href="http://sparkviewengine.com/">SparkViewEngine</a>. This engine allows ‘<em>the html to dominate the flow and the code to fit seamlessly</em>’, losing the horrible &lt;% %&gt; tags which can make the default viewengine unreadable.</p>
+<p>Overall I’m very impressed with the MVC framework, and how easy it is to pick up. The time its taken to learn has been minimal and hasn’t affected the time it’s taken to use it on my current project. I can see the benefits it will bring in the future, including having greater confidence of releases (due to unit testing) and the maintainability that the MVC pattern enforces via the separation of concerns.</p>

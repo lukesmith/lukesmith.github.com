@@ -1,0 +1,16 @@
+---
+layout: post
+title: Sometimes you have to catch an exception
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>I had a <a href="http://blog.lukesmith.net/index.php/2008/05/17/httprequest-queryvalue-extension-methods/#comment-1602">comment</a> left recently on a <a href="http://blog.lukesmith.net/index.php/2008/05/17/httprequest-queryvalue-extension-methods/">post</a> I made a few months ago (<a href="http://blog.lukesmith.net/index.php/2008/05/17/httprequest-queryvalue-extension-methods/">HttpRequest QueryValue extension methods</a>), I was going to reply in the comments but felt it deemed a post in itself.</p>
+<p>I agree 100% with the commenter about avoiding throwing exceptions and I try to always use the <a href="http://blogs.msdn.com/kcwalina/archive/2005/03/16/396787.aspx">Tester-Doer pattern</a>. As you can see in the code in the post I am using this pattern. </p>
+<p>However the <a href="http://msdn.microsoft.com/en-us/library/system.componentmodel.typeconverter.convertfrominvariantstring.aspx">ConvertFromInvariantString</a> method will throw an exception in cases where 'asdf' is trying to be converter to an int, and at the time I couldn't find a way to do something similar to a TryParse with a TypeConverter. The IsValid method exists but this always returns true and Microsoft have said they <a href="http://weblogs.asp.net/cazzu/archive/2005/12/01/BackCompatSucks.aspx">won't fix it</a>. So using a TypeConverter as above you are required to catch an exception (sucks doesn't it?). </p>
+<p>The <a href="http://msdn.microsoft.com/en-us/library/system.componentmodel.typeconverter.isvalid.aspx">IsValid</a> Documentation states 'You can write your own WillConvertSuceed method by wrapping the ConvertTo and ConvertFrom methods in exception blocks.'.</p>
+<p>If anyone knows of a way around having to catch an exception when using a TypeConverter please send me a message or leave a comment.</p>

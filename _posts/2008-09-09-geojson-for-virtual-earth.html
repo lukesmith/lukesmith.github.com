@@ -1,0 +1,26 @@
+---
+layout: post
+title: GeoJSON for Virtual Earth
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>For my new project I decided to make use of <a href="http://geojson.org/">GeoJSON</a>, a standard for representing geo data in JSON format, rather than returning KML, georss to the client, or some custom format.</p>
+<p>From a quick look online there wasn't much in the way of using <a href="http://dev.live.com/virtualearth/sdk">Virtual Earth</a> with <a href="http://geojson.org/">GeoJSON</a>, I found one <a href="http://viswaug.wordpress.com/2008/06/02/sql-server-2008-virtualearth-made-easier-and-building-a-rest-api/">blog post</a> that was the inspiration behind doing VEGeoJSON.</p>
+<p>The VEGeoJSON library provides two functions (not much of a library)</p>
+<ul>
+<li>addGeoJSON(data, onLayerCreated, onShapeCreated)  </li>
+<li>getGeoJSON(onGeometryCreated) </li>
+</ul>
+<p>As a quick example of its usage</p>
+<pre class="code"><span style="color:blue;">var </span>v = <span style="color:blue;">new </span>VEGeoJson(map);
+<span style="color:blue;">var </span>geoJson = v.getGeoJSON();</pre>
+<p>VEGeoJSON supports all the GeoJSON shapes; Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection.</p>
+<p> </p>
+<p>Thanks to <a href="http://hackersoftmvp.spaces.live.com/">Colin Brown</a> for giving it a quick test and talking me into putting it on <a href="http://www.codeplex.com/vegeojson/">CodePlex</a>.</p>
+<p> </p>
+<div style="display:inline;margin:0;padding:0;" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:1c86659d-e962-4c69-87ae-53ca6a14cd55" class="wlWriterSmartContent">Technorati Tags: <a href="http://technorati.com/tags/geojson" rel="tag">geojson</a>,<a href="http://technorati.com/tags/virtual%20earth" rel="tag">virtual earth</a>,<a href="http://technorati.com/tags/vegeojson" rel="tag">vegeojson</a></div>

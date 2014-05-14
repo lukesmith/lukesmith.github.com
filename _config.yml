@@ -6,17 +6,19 @@ gems:
   - jekyll-sitemap
 
 # Permalinks
-permalink:        /blog/:year/:month/:day/:title
+permalink:        /blog/:year/:month/:day/:title/
 
 # Setup
 title:            Luke Smith
 tagline:          "Write today, wrong tomorrow"
 url:              http://www.lukesmith.net
-paginate:         1
+paginate_path:    "/blog/page/:num"
+paginate:         10
 author:
   name:           Luke Smith
   url:            https://twitter.com/lukesmith
   email:          me@lukesmith.net
+exclude:          ['.ruby-gemset', '.ruby-version', 'Gemfile', 'Gemfile.lock', 'README', 'CNAME']
 
 version:          1.0.0
 github:

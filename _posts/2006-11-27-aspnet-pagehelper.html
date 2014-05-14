@@ -1,0 +1,51 @@
+---
+layout: post
+title: ASP.NET PageHelper
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+Since moving from university to the 'real' world of development I've been creating<br />
+alot of helper classes to try and cut down on the number of LOC I have to write. One<br />
+thing which bugged me for a while was Query Strings in ASP.NET - checking whether<br />
+a string existed and then getting that strings value. Sounds simple but then what<br />
+if you're expecting it to be an integer or a double, or a DateTime or something else?<br />
+You have to go through the checking then the converting to the type you want.</p>
+<p>
+So instead of</p></p>
+<div>
+<pre>
+<div>
+string querystring = Request.QueryString["myinteger"]; if (!string.IsNullOrEmpty(querystring))
+{ int output; if (int.TryParse(querystring, out output)
+{ // the
+querystring was actually an integer  }
+}
+</div>
+</pre>
+</div>
+<p>&gt;</p>
+<p>
+I wrote a helper class that will return a <a href="http://msdn2.microsoft.com/en-gb/library/1t3y8s4s.aspx">nullable<br />
+type</a> of the QueryString value giving cleaner code in the page and reducing the<br />
+chances of not catching exceptions, as you can never be 100% the querystring you expect<br />
+to be an integer will be an integer</p></p>
+<div>
+<pre>
+<div>
+int? output = PageHelper.GetQueryInt("myinteger"); if (output.HasValue)
+{ // output
+is an integer }
+</div>
+</pre>
+</div>
+<p>&gt;</p>
+<p>
+I am finishing off a code viewer for my website, so i will soon be making the PageHelper<br />
+and other helper classes available.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=9ad69be5-8a54-47d1-8f12-483da107b786" /></p>

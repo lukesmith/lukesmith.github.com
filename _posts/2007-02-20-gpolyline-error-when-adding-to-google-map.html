@@ -1,0 +1,43 @@
+---
+layout: post
+title: GPolyLine error when adding to Google Map
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+---------------------------<br />
+Error<br />
+---------------------------<br />
+A Runtime Error has occurred.<br />
+Do you wish to Debug?</p>
+<p>
+Line: 29<br />
+Error: Unexpected call to method or property access.<br />
+---------------------------<br />
+Yes No<br />
+<br />
+---------------------------</p>
+<p>
+If you are getting the following error in Internet Explorer when attempting to add<br />
+a GPolyLine to your google map via the API then make sure you have added the VML namespace<br />
+and CSS correctly.</p>
+<p>
+&lt;html xmlns="<a href="http://www.w3.org/1999/xhtml&quot;">http://www.w3.org/1999/xhtml"</a> xmlns:v="urn:schemas-microsoft-com:vml"&gt;<br />
+&lt;head&gt;<br />
+&lt;title&gt;My page&lt;/title&gt;<br />
+&lt;style type="text/css"&gt;<br />
+v\:* {<br />
+behavior:url(#default#VML);<br />
+}<br />
+&lt;/style&gt;<br />
+&lt;/head&gt;</p>
+<p>
+I've had the problem for a while and just made a 2nd look for the fix and found it<br />
+on the <a href="http://groups.google.com.ng/group/Google-Maps-API/browse_thread/thread/64f51f145f41d6b2?tvc=2">google<br />
+maps api group</a>. I was missing out the xmlns:s namespace declaration.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=5e9855eb-c55d-4fe2-8ed5-dcb20939ede1" /></p>

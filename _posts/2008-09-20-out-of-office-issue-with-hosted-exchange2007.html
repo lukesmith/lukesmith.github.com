@@ -1,0 +1,23 @@
+---
+layout: post
+title: Out of Office issue with hosted Exchange2007
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _oembed_5c12149cd761fdb0f8963736bc115c1b: '{{unknown}}'
+  _oembed_4edc836cc5510742b01f012d54f91392: '{{unknown}}'
+author: 
+---
+<p>1and1 have upgraded me to Exchange2007, which is nice. I’m liking the flagging features now available on my Windows Mobile device.</p>
+<p>I ran into an issue, which 1and1 refused to help me solve due to it being ‘out of our scope of support’. They’re support is ‘will provide you the necessary settings for you to be able to setup your exchange account in your Outlook 2007’. As far as I’m concerned not being able to view the Out of Office options comes under they’re support.</p>
+<p>My situation is I have my exchange server hosted with 1and1, and the domain not. I’m not sure if I would have the same issue whether I had the domain hosted with them or not.</p>
+<p>When Outlook 2007 starts up it attempts to connect to autodiscover.lukesmith.net (as lukesmith.net is the domain of the email), which obviously didn’t exist as exchange isn’t at that domain and so certificate warnings were being shown, and OOF not working.</p>
+<blockquote><p>"Your Out of Office settings cannot be displayed, because the server is currently unavailable. Try again later".</p>
+</blockquote>
+<p>All I was after from 1and1 support was the URL for the their exchange autodiscover so I could setup a CNAME record in my DNS settings for the domain. So after getting a reply (which was quite quick even if it wasn’t helpful) I broke out fiddler and watched the requests outlook was making. It turns out it was making the request to <a href="http://autodiscover.lukesmith.net/autodiscover/autodiscover.xml">http://autodiscover.lukesmith.net/autodiscover/autodiscover.xml</a>. So a few more tries and I discovered <a href="http://exchange.1and1.co.uk/autodiscover/autodiscover.xml">http://exchange.1and1.co.uk/autodiscover/autodiscover.xml</a> was requiring authentication and after authenticating returning an xml response.</p>
+<p>Adding the DNS record below fixed the issue of not being able to use Out of Office replies though I’m still getting the certificate errors. These used to occur when connecting to Exchange2003, but stopped after a while.</p>
+<blockquote><p>autodiscover.lukesmith.net CNAME exchange.1and1.co.uk</p>
+</blockquote>

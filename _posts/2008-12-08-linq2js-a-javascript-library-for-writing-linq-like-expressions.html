@@ -1,0 +1,36 @@
+---
+layout: post
+title: Linq2JS – A JavaScript library for writing Linq-like expressions
+categories:
+- linq2js
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>It all started when I was having to convert some C# to JavaScript, so was needing quite a bit of collection manipulation. It’s frustrating going back to lots of for loops when you’ve been blessed with LINQ for a year. So after 20 hours of solid coding one weekend (the first implementation was written in 10 hours with the second 10 tidying things up) I created Linq2JS. I’m very happy with how its turned out, however some things are still lacking (building an expression tree to improve the performance). Over the past 2 weeks I’ve been documenting, writing unit tests and fixing bugs that the unit tests have uncovered (note to self: unit tests should be done first) and finally released the first fully tested version (1.2). The whole thing comes in at under 20KB minified, so it’s not huge even though there's nearly 2000 lines of code in the un-minified version. I’ve setup a <a href="http://linq2js.com">wiki</a>, where I will be hosting documentation for any future projects I do, and have made a start documenting all the functionality of <a href="http://linq2js.com">Linq2JS</a>.</p>
+<h3> </h3>
+<h3>Example</h3>
+<p>A brief example of using Linq2JS</p>
+<pre class="brush:js">var animals = [];
+animals.push({ type: AnimalType.Dog, name: "Rover", age: 13, children: [] });
+animals.push({ type: AnimalType.Cat, name: "Fluffy", age: 1, children: [] });
+animals.push({ type: AnimalType.Dog, name: "Rex", age: 12, children: ["Rover"] });
+animals.push({ type: AnimalType.Fish, name: "Goldie", age: 3, children: ["Scales", "Goldie"] });
+animals.push({ type: AnimalType.Cat, name: "Fudge", age: 20, children: ["Digby", "Kitty"] });
+animals.push({ type: AnimalType.Cat, name: "Digby", age: 2, children: [] });
+animals.push({ type: AnimalType.Cat, name: "Kitty", age: 4, children: [] });
+animals.push({ type: AnimalType.Dog, name: "Rover", age: 3, children: [] });
+animals.push({ type: AnimalType.Fish, name: "Scales", age: 2, children: [] });
+animals.push({ type: AnimalType.Fish, name: "Goldie", age: 1, children: [] });
+
+var source = new Enumerable(animals);  // or = $e(animals)
+
+var result = source.where(function(item) {
+    return item.age &gt; 9;
+}).select(function(item) {
+    return item.name + " is " + item.age + " years old";
+}).execute();
+</pre>

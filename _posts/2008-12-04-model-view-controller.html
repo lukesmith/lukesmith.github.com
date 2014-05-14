@@ -1,0 +1,22 @@
+---
+layout: post
+title: Model View Controller
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>I’m giving a presentation next week at work about MVC (specifically <a href="http://www.asp.net/mvc/">Microsoft's ASP.NET MVC Framework</a>) so thought I’d dust off the blog and put some of my thoughts down regarding the topic.</p>
+<p>First off, what is MVC? MVC stands for Model-View-Controller and is an architectural design pattern for developing applications. It’s not specific to the web, as desktop applications can also make use of the design pattern. The basis of MVC is to force the separation of the business logic from the UI. The greatest benefit of this in my opinion is the ability to enable Test Driven Development (TDD) easily.</p>
+<p><strong>The Model</strong></p>
+<p>The model is the term used to represent the data and information in the system, as well as the business rules of the application.</p>
+<p><strong>The View</strong></p>
+<p>The view is the UI elements of the application, what the user sees, whether they be textboxes and checkboxes on a webpage or a generated report from the application.</p>
+<p><strong>The Controller</strong></p>
+<p>The controller is what brings everything together. The controller responds to user input and interaction, manipulates the model (data and business rules) then chooses a view to render the model to. The controller should actually do very little work, it should delegate to perform business logic. This keeps the logic separate and more easily testable.</p>
+<p> </p>
+<p>In a future post I’ll talk specifically about the <a href="http://www.asp.net/mvc/">ASP.NET MVC Framework</a>.</p>
+<div style="display:inline;float:none;margin:0;padding:0;" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:449c3dd5-8979-4172-b3ea-9671704c36a3" class="wlWriterEditableSmartContent">Technorati Tags: <a href="http://technorati.com/tags/MVC" rel="tag">MVC</a>,<a href="http://technorati.com/tags/Model+View+Controller" rel="tag">Model View Controller</a></div>

@@ -1,0 +1,24 @@
+---
+layout: post
+title: The When, What and Why of auditing
+categories:
+- Development
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>One of the things I’ve come across in most systems is the requirement for auditing.</p>
+<p>As i see it there are 3 approaches to auditing</p>
+<ol>
+<li><strong>When</strong> - Keeping track of when something changed. e.g <em>Product A was changed by Bob on 1st April 2009.</em> </li>
+<li><strong>What</strong> - Keeping track of what changed - e.g <em>Product A's price was changed from £15 to £20 by bob on 1st April 2009</em> </li>
+<li><strong>Why</strong> - Keeping track of why something changed - e.g <em>Product A's price changed from £15 to £20 by bob on 1st April 2009 because it was wrongly priced originally.</em> </li>
+</ol>
+<p>Number 3, <strong>why</strong>, provides the most value. Not only does it allow the users of the system to be able to see the intent of changes (providing an extra dimension to reports) but it also provides some valuable information to any developer tasked with fixing an issue in the system. If a developer can see what the users intent was then it can help in providing a possible diagnoses.</p>
+<p>As a more detailed example imagine you own an online shop that allows users to be able to cancel orders before they are actually shipped from the warehouse. You could provide a big button that says "cancel order". Simple, but this would not give a reason behind the user cancelling their order.</p>
+<p>A better option would be to give the customer a set of options as to why they want to cancel, is it because they’ve since found it cheaper elsewhere, decided they don’t want it anymore, have heard "the next big thing" is due out in a week and are waiting for that or that it is taking too long to dispatch? Capturing this information allows audit reports to be run in the future about why customers are cancelling their orders.</p>
+<p>Once you know the intent behind the customer cancelling the order you can then initiate different business processes, if it is because they've found it cheaper elsewhere then this could invoke a process for the sales team to contact them to match the offer. If its because its taking too long to dispatch then send them a voucher for free delivery on their next order. Keeping the customer happy is more likely to make them return.</p>
+<p>Without catching the intent (whether for auditing or not) this would not be possible.</p>

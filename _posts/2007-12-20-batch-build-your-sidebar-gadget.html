@@ -1,0 +1,24 @@
+---
+layout: post
+title: Batch build your Sidebar Gadget
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>I was looking for a way to build a sidebar gadget, rather than manually creating a<br />
+zip file (changing to a .gadget extension) and then copy the files needed into the<br />
+.gadget. A quick Google came up with this MSDN article <a href="http://msdn.microsoft.com/msdnmag/issues/07/08/SideBar/">'Build<br />
+your own Vista Sidebar Gadget</a>' with a handy section <a href="http://msdn.microsoft.com/msdnmag/issues/07/08/SideBar/#S12">'Packaging<br />
+your gadget</a>'. Included is some batch code for creating the gadget file with the<br />
+necessary files and copying it to the Gadget directory. I've made a simple tweak to<br />
+it to take the gadget name as a parameter.</p>
+<pre>@echo on  rem ** remove/create a test gadget folder rd "%LOCALAPPDATA%MicrosoftWindows SidebarGadgets%1" /s /q md "%LOCALAPPDATA%MicrosoftWindows SidebarGadgets%1"  rem ** copy all of the files into test area xcopy . "%LOCALAPPDATA%MicrosoftWindows SidebarGadgets%1" /y /s /q /EXCLUDE:exclude.txt  rem cd "%LOCALAPPDATA%MicrosoftWindows SidebarGadgets%1" rem cabarc -r -p n "%HOMEPATH%Documents%1" *</pre>
+<p>Â </p>
+<p>Add an external tool in visual studio to give you a 2 click building process of your<br />
+gadget.</p>
+<p><a href="http://blog.lukesmith.net/wp-content/uploads/images/BatchbuildyourSidebarGadget_FC6E/Capture.jpg"><img title="Capture" alt="Capture" src="http://blog.lukesmith.net/wp-content/uploads/images/BatchbuildyourSidebarGadget_FC6E/Capture_thumb.jpg" /></a></p>
+<p><img height="1" src="http://dasblog.lukesmith.net/aggbug.ashx?id=923b1362-670a-4d35-af2f-591f601fac6e" width="1" /></p>

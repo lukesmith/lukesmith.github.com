@@ -1,0 +1,34 @@
+---
+layout: post
+title: Aspx or Ashx?
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _oembed_79e3c05a3acbbf7511591e34f7f8c4a4: '{{unknown}}'
+author: 
+---
+<p>
+I just got a notification from Windows Live Mail Desktop saying it couldn't find the<br />
+url <a title="http://mail.services.live.com/DeltaSync_v1.0.0/sync.aspx" href="http://mail.services.live.com/DeltaSync_v1.0.0/sync.aspx">http://mail.services.live.com/DeltaSync_v1.0.0/sync.aspx</a> when<br />
+trying to poll for new messages. I thought this as strange since aspx pages are primarily<br />
+used for rendering Html content (altho nothing is stopping you from <a href="http://weblogs.asp.net/plip/archive/2006/04/29/444457.aspx">outputting<br />
+something</a> else such as Xaml).</p>
+<blockquote>
+<p>
+<em>The advantages of using a HttpHandler over a common Page (web form, ASPX) are<br />
+multiple: The HttpHandler gets the request very early, before it is processed by the<br />
+framework. When the request's recipient is a Page, the ASP.NET framework fires many<br />
+events, which may or may not be implemented by the Page. The mechanism is relatively<br />
+long and complex, and can be avoided, especially if the request doesn't need web controls.<br />
+It is especially well adapted for frequent, fast requests, for example to query the<br />
+state of a server-side process (completion). - <a href="http://www.galasoft-lb.ch/mydotnet/articles/article-2006100601.aspx">Source</a></em></p>
+</blockquote>
+<p>
+So why the Live team are using an aspx page I don't know (of course behind the scenes<br />
+it may not be deriving from Page and the .aspx extension is just making it backwards<br />
+compatible). Maybe <a href="http://scottisafool.spaces.live.com/">Scott</a> can find<br />
+out for me.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=2c2b0554-de93-46f0-9b87-3a090ad6940e" /></p>

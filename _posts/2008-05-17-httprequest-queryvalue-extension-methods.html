@@ -1,0 +1,79 @@
+---
+layout: post
+title: HttpRequest QueryValue extension methods
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>Getting non string values from the querystring can be a chore if you need to read alot of values; parsing to the required type and ensuring the querystring value doesn't cause an exception ("adsf" cannot become an integer) can add alot of code to each page. So a long while ago I created a small helper class to do this for me, which I've now upgraded (after reading a <a href="http://feeds.feedburner.com/~r/ScottHanselman/~3/287295531/TypeConvertersTheresNotEnoughTypeDescripterGetConverterInTheWorld.aspx">blog entry</a> by ScottH about TypeConverters) to use generics and extension methods. I've also included methods to get a value from the Request.Form property.</p>
+<pre class="code"><span style="color:blue;">using </span>System;
+<span style="color:blue;">using </span>System.Web;
+<span style="color:blue;">using </span>System.ComponentModel;
+
+<span style="color:blue;">namespace </span>LukeSmith.Web
+{
+    <span style="color:blue;">public static class </span><span style="color:#2b91af;">HttpRequestHelper
+    </span>{
+        <span style="color:blue;">public static </span>T? GetQueryValue&lt;T&gt;(<span style="color:blue;">this </span><span style="color:#2b91af;">HttpRequest </span>request, <span style="color:blue;">string </span>name)
+            <span style="color:blue;">where </span>T : <span style="color:blue;">struct
+        </span>{
+            <span style="color:blue;">return </span>ConvertFromString&lt;T&gt;(request.QueryString[name]);
+        }
+
+        <span style="color:blue;">public static </span>T? GetQueryValue&lt;T&gt;(<span style="color:blue;">this </span><span style="color:#2b91af;">HttpRequest </span>request, <span style="color:blue;">int </span>index)
+            <span style="color:blue;">where </span>T : <span style="color:blue;">struct
+        </span>{
+            <span style="color:blue;">return </span>ConvertFromString&lt;T&gt;(request.QueryString[index]);
+        }
+
+        <span style="color:blue;">public static </span>T? GetFormValue&lt;T&gt;(<span style="color:blue;">this </span><span style="color:#2b91af;">HttpRequest </span>request, <span style="color:blue;">string </span>name)
+            <span style="color:blue;">where </span>T : <span style="color:blue;">struct
+        </span>{
+            <span style="color:blue;">return </span>ConvertFromString&lt;T&gt;(request.Form[name]);
+        }
+
+        <span style="color:blue;">public static </span>T? GetFormValue&lt;T&gt;(<span style="color:blue;">this </span><span style="color:#2b91af;">HttpRequest </span>request, <span style="color:blue;">int </span>index)
+            <span style="color:blue;">where </span>T : <span style="color:blue;">struct
+        </span>{
+            <span style="color:blue;">return </span>ConvertFromString&lt;T&gt;(request.Form[index]);
+        }
+
+        <span style="color:blue;">private static </span>T? ConvertFromString&lt;T&gt;(<span style="color:blue;">string </span>value)
+            <span style="color:blue;">where </span>T : <span style="color:blue;">struct
+        </span>{
+            T? result = <span style="color:blue;">null</span>;
+
+            <span style="color:blue;">if </span>(!<span style="color:blue;">string</span>.IsNullOrEmpty(value))
+            {
+                <span style="color:#2b91af;">TypeConverter </span>converter = <span style="color:#2b91af;">TypeDescriptor</span>.GetConverter(<span style="color:blue;">typeof</span>(T));
+
+                <span style="color:blue;">if </span>(converter.CanConvertFrom(<span style="color:blue;">typeof</span>(<span style="color:blue;">string</span>)))
+                {
+                    <span style="color:blue;">try
+                    </span>{
+                        <span style="color:blue;">object </span>obj = converter.ConvertFromInvariantString(value);
+                        result = (T)obj;
+                    }
+                    <span style="color:blue;">catch </span>(<span style="color:#2b91af;">Exception</span>)
+                    {
+                    }
+                }
+            }
+
+            <span style="color:blue;">return </span>result;
+        }
+    }
+}</pre>
+<p><a href="http://11011.net/software/vspaste"></a></p>
+<p><a href="http://11011.net/software/vspaste"></a></p>
+<p />
+<p />
+<p><em>Updated: </em><a href="http://blog.lukesmith.net/index.php/2008/07/31/sometimes-you-have-to-catch-an-exception/"><em>Why Try/Catch was used</em></a></p>
+<p />
+<div class="wlWriterSmartContent" style="display:inline;float:none;margin:0;padding:0;">Technorati Tags: <a href="http://technorati.com/tags/extension%20methods" rel="tag">extension methods</a>,<a href="http://technorati.com/tags/c#" rel="tag">c#</a>,<a href="http://technorati.com/tags/aspnet" rel="tag">aspnet</a>,<a href="http://technorati.com/tags/querystring" rel="tag">querystring</a>,<a href="http://technorati.com/tags/generics" rel="tag">generics</a>,<a href="http://technorati.com/tags/TypeConverter" rel="tag">TypeConverter</a>,<a href="http://technorati.com/tags/HttpRequest" rel="tag">HttpRequest</a></div>
+<p />
+<p><a href="http://11011.net/software/vspaste"></a></p>

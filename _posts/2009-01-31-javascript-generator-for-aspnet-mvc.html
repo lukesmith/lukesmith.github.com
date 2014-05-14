@@ -1,0 +1,167 @@
+---
+layout: post
+title: JavaScript variable generation for ASP.NET MVC
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p><a href="http://weblogs.asp.net/scottgu/archive/2009/01/27/asp-net-mvc-1-0-release-candidate-now-available.aspx">RC1</a> of the <a href="http://www.asp.net/mvc/">ASP.NET MVC framework</a> adds a new ActionResult, JavaScriptResult. This class takes a string and returns a response with the string with the required ContentType.</p>
+<p>So now theres a built in (very simple) ActionResult for returning JavaScript what about generating the JavaScript string on the server to return?</p>
+<p>One thing I do alot is to recreate service side enums on the client in JavaScript, so rather than checking values I can use names, which improves the readability of the javascript. However this requires both the server and the client to be kept in sync, which can be a pain.</p>
+<p>To resolve this issue I’ve created a JavaScriptGenerator class which handles serialization of objects and Enum types as variables and generates the JavaScriptResult, as well as a helper method to take a controller name and action name and insert the required &lt;script .. /&gt; tag into the markup.</p>
+<p>Note I’ve created my own JavaScriptHelper class, similar to HtmlHelper, that I extend with extension methods the are javascript specific. I’ve also got a bunch of other extension methods for registering variables in the html itself as well as adding the &lt;script /&gt; tag for a specified filename.</p>
+<pre class="brush:csharp">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+
+namespace LukeSmith.Web.Mvc.JavaScript
+{
+    public class JavaScriptGenerator
+    {
+        private StringBuilder builder;
+
+        /// <summary>
+        /// Initializes a new instance of the  class.
+        /// </summary>
+        public JavaScriptGenerator()
+        {
+            builder = new StringBuilder();
+        }
+
+        /// <summary>
+        /// Generates a javascript variable from enum.
+        /// </summary>
+        /// The name to give the javascript variable.
+        /// Type of the enum.
+        /// 
+        /// Current instance of the .
+        /// 
+        /// 
+        public JavaScriptGenerator GenerateVariableFromEnum(string name, Type enumType)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            if (enumType.IsEnum)
+            {
+                Array values = Enum.GetValues(enumType);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                Dictionary dictionary =new Dictionary();
+
+                foreach (var value in values)
+                {
+                    string enumName = Enum.GetName(enumType, value);
+
+                    dictionary.Add(enumName, value);
+                }
+
+                builder.Append(string.Format("var {0} = {1};", name, serializer.Serialize(dictionary)));
+            }
+            else
+            {
+                throw new InvalidOperationException("Cannot generate JavaScript code when enumType is not an Enum.");
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Generates a javascript variable from an object.
+        /// </summary>
+        /// The name to give the javascript variable.
+        /// The value.
+        /// 
+        /// Current instance of the .
+        /// 
+        public JavaScriptGenerator GenerateVariableFromObject(string name, object value)
+        {
+            List converters = new List();
+
+            return this.GenerateVariableFromObject(name, value, converters);
+        }
+
+        /// <summary>
+        /// Generates a javascript variable from an object.
+        /// </summary>
+        /// The name to give the javascript variable.
+        /// The value.
+        /// The  to use to convert the .
+        /// 
+        /// Current instance of the .
+        /// 
+        public JavaScriptGenerator GenerateVariableFromObject(string name, object value, JavaScriptConverter converter)
+        {
+            List converters = new List();
+            converters.Add(converter);
+
+            return this.GenerateVariableFromObject(name, value, converters);
+        }
+
+        /// <summary>
+        /// Generates a javascript variable from an object.
+        /// </summary>
+        /// The name to give the javascript variable.
+        /// The value.
+        /// An  of  to use to convert the .
+        /// 
+        /// Current instance of the .
+        /// 
+        public JavaScriptGenerator GenerateVariableFromObject(string name, object value, IEnumerable converters)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.RegisterConverters(converters);
+
+            builder.Append(string.Format("var {0} = {1};", name, serializer.Serialize(value)));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Generates the .
+        /// </summary>
+        /// 
+        public JavaScriptResult Generate()
+        {
+            return new JavaScriptResult() { Script = this.ToString() };
+        }
+
+        /// <summary>
+        /// Returns a  that represents the current .
+        /// </summary>
+        /// 
+        /// A  that represents the current .
+        /// 
+        public override string ToString()
+        {
+            return builder.ToString();
+        }
+    }
+}
+</pre>
+<p>And the code for the helper method<br />
+ </p>
+<pre class="brush:csharp">
+public static string ScriptInclude(this JavaScriptHelper javaScriptHelper, string actionName, string controllerName)
+        {
+            UrlHelper helper = new UrlHelper(javaScriptHelper.ViewContext.RequestContext);
+            string url = helper.Action(actionName, controllerName);
+
+            return string.Format("{1}", url, Environment.NewLine);
+        }
+</pre>
+<div id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:058ce707-037a-4e5c-a774-76a1a87494e6" class="wlWriterEditableSmartContent" style="display:inline;float:none;margin:0;padding:0;">Technorati Tags: <a rel="tag" href="http://technorati.com/tags/asp.net+mvc">asp.net mvc</a>,<a rel="tag" href="http://technorati.com/tags/JavaScript">JavaScript</a>,<a rel="tag" href="http://technorati.com/tags/JavaScriptResult">JavaScriptResult</a></div>

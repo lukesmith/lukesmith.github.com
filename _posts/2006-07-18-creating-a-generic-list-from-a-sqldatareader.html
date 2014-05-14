@@ -1,0 +1,102 @@
+---
+layout: post
+title: Creating a generic list from a SqlDataReader
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I've just been working on the data access layer for a project at work and found myself<br />
+replicating alot of very similar code when it came to looping through the SqlDataReader<br />
+and creating and populating a custom object for each IDataRecord (creating lists of<br />
+projects, staff etc). I sat back and thought "there must be an easier way to write<br />
+not much code, after all this is the world of .NET and C#".</p>
+<p>
+So here's my solution for returning a a generic List&lt;&gt; populated from a SqlDataReader.</p>
+<p>
+public interface IObjectPopulator<br />
+{<br />
+object Populate(IDataRecord<br />
+dr);<br />
+}</p>
+<p>
+public class Project<br />
+: IObjectPopulator<br />
+{<br />
+   private int?<br />
+_id;<br />
+   public int?<br />
+Id<br />
+   {<br />
+      get { return _id;<br />
+}<br />
+      internal set<br />
+{ _id = value;<br />
+}<br />
+   }</p>
+<p>   private string _name;<br />
+   public string Name<br />
+   {<br />
+      get { return _name;<br />
+}<br />
+      set { _name = value;<br />
+}<br />
+   }</p>
+<p>   #region IObjectPopulator<br />
+Members</p>
+<p>   public object Populate(IDataRecord<br />
+dr)<br />
+   {<br />
+      Project project = new Project();<br />
+      project.Id = Convert.ToInt32(dr["project_ID"]);<br />
+      project.Name = Convert.ToString(dr["project_name"]);</p>
+<p>      <font color="#0000ff">return</font> project;<br />
+<br />
+   }</p>
+<p>   <font color="#0000ff">#endregion</font><br />
+<br />
+}</p>
+<p>
+protected List&lt;T&gt;<br />
+PopulateList&lt;T&gt;(SqlDataReader reader)<br />
+{<br />
+   ArgumentValidator.CheckForNullReference(reader, "reader");<br />
+   List&lt;T&gt; list = null;</p>
+<p>   try<br />
+<br />
+   {<br />
+      list = new List&lt;T&gt;();</p>
+<p>      while (reader.Read())<br />
+      {<br />
+         object o = Activator.CreateInstance(typeof(T));<br />
+         IObjectPopulator populator = o as IObjectPopulator;</p>
+<p>         if (populator<br />
+!= null)<br />
+         {<br />
+            T item = (T)populator.Populate(reader);</p>
+<p>            list.Add(item);<br />
+         }<br />
+      }<br />
+   }<br />
+   finally<br />
+<br />
+   {<br />
+      reader.Close();<br />
+   }</p>
+<p>   return list;<br />
+}</p>
+<p>
+<font face="Verdana" size="2">Now<br />
+instead of having to loop thru the SqlDataReader in every method that creates a List&lt;&gt; I<br />
+can just call</font></p>
+<p>
+   List&lt;Project&gt;<br />
+projects = base.PopulateList&lt;Project&gt;(reader);</p>
+<p>
+<font face="Verdana" size="2">Saving<br />
+myself alot of lines of code.</font></p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=0ba5a3cb-79e6-4603-ac6b-852b1b495b37" /></p>

@@ -1,0 +1,25 @@
+---
+layout: post
+title: Send to Nabaztag IE Extension
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>If you're a long term blog reader of mine then you'd know I have one of those pointlessly cool WiFi <a href="http://www.nabaztag.com">Nabaztag</a> rabbits. It usually just sits on my shelf doing nothing, but I've now decided to use it as a podcast player. I created a simple and quick IE Extension to be able to send links (the rabbit will only play mp3's) to the <a href="http://api.nabaztag.com/docs/home.html">Nabaztag Api</a>.</p>
+<p>If you have a Nabaztag and you too want to send URLs from IE to be played on your pointlessly cool rabbit as well then follow the instructions:</p>
+<ol>
+<li>Download and extract the <a href="http://files.lukesmith.net/SendToNabaztagIEExtension.zip">SendToNabaztagIEExtension</a> zip to somewhere on your machine. </li>
+<li>Right click on IEExtension.reg and select edit. </li>
+<li>Modify the directory of IEExtension.html and save. </li>
+<li>Double click IEExtension.reg to install the registry settings. (note: usual blurb about the dangers of editing the registry) </li>
+<li>Edit IEExtension.html and enter the token and serial number for your rabbit. These can be found under the "my Burrow" section of the Nabaztag website. </li>
+<li>Close any instances of IE. </li>
+</ol>
+<p>Next time you open IE, when right clicking on a hyperlink you will see an option 'Send to Nabaztag'. Clicking this will send the link to your bunny (note: the url is sent regardless of whether the rabbit can actually play it).</p>
+<p><a href="http://blog.lukesmith.net/wp-content/uploads/images/SendtoNabaztagIEExtension_11399/sendtonabaztag.jpg"><img style="border-width:0;" height="305" alt="sendtonabaztag" src="http://blog.lukesmith.net/wp-content/uploads/images/SendtoNabaztagIEExtension_11399/sendtonabaztag_thumb.jpg" width="344" border="0" /></a> </p>
+<p>Notes: A new window is opened to make the request, which will show the response from the NabaztagApi. I tried using XmlHttpRequest but was unable to because of the cross-domain call being made. It was only quickly put together, so use at your own risk!</p>
+<div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:6e91061f-22ae-44f9-9eb2-372ae68613a9" style="display:inline;margin:0;padding:0;">Technorati Tags: <a href="http://technorati.com/tags/Nabaztag" rel="tag">Nabaztag</a></div>

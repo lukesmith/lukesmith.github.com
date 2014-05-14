@@ -1,0 +1,114 @@
+---
+layout: post
+title: Introducing Abaxus
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+Over the past month or so I've been working on a simple text parser library, called<br />
+Abaxus. The reason for this was that I was required to automatically generate an email<br />
+document from a template with a specific set of values inserted (date, names etc...).<br />
+I created a syntax based on the macro's from within Visual Studio for pre and post<br />
+build events. I have ported the original code from .NET v1.1 to .NET v2.0.</p>
+<p></p>
+<p>
+By adding attributes to your custom classes class, properties and methods and implementing<br />
+the IAbaxusClass interface you then register the object with the parser library, currently<br />
+working on a config file section for declaring the libraries to load. Methods and<br />
+properties and both known as Macros within Abaxus; MacroMethod and MacroProperty.</p>
+<p></p>
+<p>
+The Abaxus parser comes with several prebuilt classes within the Abaxus Library, which<br />
+wrap around the .NET classes;<br />
+Abaxus - Abaxus methods for accessing metadata about the abaxus macros (description<br />
+etc..)<br />
+Math - Methods and properties for mathematical calculations<br />
+DateTime - Similar to the .NET DateTime class</p>
+<p></p>
+<p>
+As well as being able to access static methods and macros in a class that has been<br />
+registered (see above) it is also possible to access objects that have been coded<br />
+by the developer. Only variables that are of a type that implements the IAbaxusClass<br />
+interface can be registered with the parser and the object must be specifically registered<br />
+by the developer, meaning the script only has access to data within variables that<br />
+the developer allows.</p>
+<p></p>
+<p>
+I will work on more classes, adding to and refining the current ones, when I get time.</p>
+<p></p>
+<p>
+Example of the Abaxus Script</p>
+<p></p>
+<p>
+<font size="2">[</font><font color="#008080" size="2">AbaxusClass</font><font size="2">(</font><font color="#800000" size="2">"User"</font><font size="2">)]<br />
+</font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">class</font><font size="2"> </font><font color="#008080" size="2">User</font><font size="2"> : </font><font color="#008080" size="2">IAbaxusClass<br />
+</font><font size="2">{<br />
+</font><font color="#0000ff" size="2">public</font><font size="2"> User()<br />
+{<br />
+}</font></p>
+<p></p>
+<p></p>
+<p>
+<font color="#0000ff" size="2">public</font><font size="2"> User(</font><font color="#0000ff" size="2">string</font><font size="2"> name)<br />
+{<br />
+</font><font size="2">_firstName = name;<br />
+}</font></p>
+<p></p>
+<p>
+<font color="#0000ff" size="2">private</font><font size="2"> </font><font color="#0000ff" size="2">string</font><font size="2"> _firstName<br />
+= </font><font color="#0000ff" size="2">string</font><font size="2">.Empty;<br />
+[</font><font color="#008080" size="2">AbaxusProperty</font><font size="2">(</font><font color="#800000" size="2">"FirstName"</font><font size="2">)]<br />
+</font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">string</font><font size="2"> FirstName<br />
+{<br />
+</font><font color="#0000ff" size="2">get</font><font size="2"> { </font><font color="#0000ff" size="2">return</font><font size="2"> _firstName;<br />
+}<br />
+}<br /></p>
+<p></font><font size="2" /><br />
+</p></p>
+<p></p>
+<p>[<font color="#008080" size="2">AbaxusMethod</font><font size="2">(</font><font color="#800000" size="2">"Jump"</font><font size="2">)]<br />
+</font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> Jump()<br />
+{}</font><br /></p>
+<p></p>
+<p>
+<font size="2">.....</font></p>
+<p><font size="2"><font color="#008080" size="2"><br /></p>
+<p>
+User</p>
+<p></font><font size="2">user = </font><font color="#0000ff" size="2">new</font><font size="2"> </font><font color="#008080" size="2">User</font><font size="2">(</font><font color="#800000" size="2">"Luke"</font><font size="2">);<br />
+user.RegisterVariable(</font><font color="#800000" size="2">"user"</font><font size="2">);<br />
+<font color="#008080" size="2"><br />
+<br />
+AbaxusParser</font><font size="2"> parser = </font><font color="#0000ff" size="2">new</font><font size="2"> </font><font color="#008080" size="2">AbaxusParser</font><font size="2">();<br />
+</font></font><font size="2"><font size="2">parser.RegisterAbaxusClass(</font><font color="#0000ff" size="2">typeof</font><font size="2">(</font><font color="#008080" size="2">User</font><font size="2">));<br />
+parser.RegisterAbaxusClass(</font><font color="#0000ff" size="2">typeof</font><font size="2">(Abaxus.Library.</font><font color="#008080" size="2">DateTime</font><font size="2">));<br />
+parser.RegisterAbaxusClass(</font><font color="#0000ff" size="2">typeof</font><font size="2">(Abaxus.Library.</font><font color="#008080" size="2">Math</font><font size="2">));<br />
+parser.RegisterAbaxusClass(</font><font color="#0000ff" size="2">typeof</font><font size="2">(Abaxus.Library.</font><font color="#008080" size="2">Abaxus</font><font size="2">));</font></font><font size="2"><font color="#0000ff" size="2"><br /></p>
+<p>
+string</p>
+<p></font><font size="2">text = </font><font color="#800000" size="2">"hello world $(DateTime.Today)<br />
+$(Abaxus.Description[Math.Div]) and tomorrow is $(DateTime.Now[+1]) or you could put<br />
+$(DateTime.Tomorrow) said $(*user.FirstName)"</font><font size="2">;<br />
+</font><font color="#008080" size="2">Console</font><font size="2">.WriteLine(text);<br />
+</font><font color="#0000ff" size="2">string</font><font size="2"> result = parser.Parse(text);</font></font></font><br /></p>
+<p>
+As you can see you can pass parameters to methods and formatting options to properties<br />
+(I will likely change the syntax to use "{}" to indicate formatting parameters so<br />
+results of methods can be formatted).</p>
+<p></p>
+<p>
+One thing to point out is the "$(*user.FirstName)" macro. The asterix indicates that the<br />
+content of the macro is a variable. The result of this macro returns the FirstName<br />
+of "Luke", which was assigned in the C# code. The next plan, after fixing a few things,<br />
+is to allow the script to create new instances of objects through the syntax "$(*bob=User["Luke"])"<br />
+and "$(*bob=*user), which will then be available throughout the lifetime of that script.</p>
+<p></p>
+<p>
+The binaries will hopefully be available by the end of the week (16th).</p>
+<p>Any feedback on the project will be welcome.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=24" /></p>

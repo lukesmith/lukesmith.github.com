@@ -1,0 +1,35 @@
+---
+layout: post
+title: Update on Abaxus
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+A while ago I <a href="http://blog.lukesmith.net/posts/166.aspx">posted</a> about<br />
+my little project called Abaxus. Well things have been going slow with it over the<br />
+last week, to be honest I only worked on it while on the train coming back from Swindon<br />
+at the weekend. But in that time I managed a quick implementation of creating a new<br />
+object from within the Abaxus script. You can't assign anything to this variable,<br />
+set the macroproperties or anything, so you pretty much just have a new variable you<br />
+can't do anything with. I'll get around to changing this over the coming days when<br />
+I get a spare half hour.</p>
+<p></p>
+<p>
+One thing I thought about the other night was "what if someone doesn't want to allow<br />
+someone to set properties through the script but only get them?". Well this<br />
+will also be implemented in some form, most likely through a property when creating<br />
+the AbaxusParser in your .net code.</p>
+<p></p>
+<p>
+Once I get the above done I promise i'll make it available.</p>
+<p></p>
+<p>
+I also need to add some better exception logging into the parser, currently if a macro<br />
+fails it returns #MACROERROR# in its place instead of the correct result, some nice<br />
+reasoning as to why it failed shall be implemented at some stage.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=33" /></p>

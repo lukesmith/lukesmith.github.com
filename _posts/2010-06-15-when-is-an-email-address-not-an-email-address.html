@@ -1,0 +1,26 @@
+---
+layout: post
+title: When is an email address not an email address?
+categories:
+- Development
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>When it’s a string.</p>
+<p>How many systems have you worked on where you pass strings/integers etc about for email addresses and passwords among other things.</p>
+<p><em>Edit: I knew there was a real term for this, which </em><a href="http://codeofrob.com"><em>Rob</em></a><em> has reminded me - </em><a href="http://codebetter.com/blogs/dru.sellers/archive/2010/01/27/business-primitives-1-2.aspx"><em>Business Primitives</em></a></p>
+<h6>What’s wrong with this?</h6>
+<p>You’re adding a lot more work to any methods that deal with email addresses. If your methods accept a string, even if the parameter name is “emailAddress”, what is stopping me from passing a value that doesn’t represent a valid address. The answer nothing. This puts the responsibility of validating the input on the called method, likely raising an exception if it doesn’t agree with what you’ve passed it.</p>
+<p>Extension methods get used, and abused, for checking whether a string is a valid email address. The fact you are doing this with an extension method should indicate that a string is probably the wrong type.</p>
+<h6>So what can we do instead?</h6>
+<p>I believe a better approach is to represent the value with its own type. Create an EmailAddress type and have this do the validating and parsing of the actual value and have methods accept parameters of this type. No longer will you have conditions spread throughout your codebase and no more will you have to trace to find out how and where the incorrect value entered the system. You get instant feedback as soon as you try treating an invalid value as an email address, stopping it moving deeper into the system.</p>
+<p>Passwords *should* be encrypted so generally you store the encrypted value as well as a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a>. value. Why treat these two values separate (a string for the encrypted value and a string for the salt), bring them together under a Password type. You then have a logical place to create passwords from plain text and compare whether a plain text string is the same as an encrypted password.</p>
+<h6>But what about my ORM?</h6>
+<p>Any decent ORM, such as NHibernate, will allow you to map a custom type. NHibernate enables this via the IUserType interface.</p>
+<h6>Show me the code</h6>
+<p>I have posted both my implementations for the <a href="http://gist.github.com/439016#file_email_address.cs">EmailAddress</a> and <a href="http://gist.github.com/439016#file_password.cs">Password</a> types over on <a href="http://github.com/">github</a>. I’ve also added gists for the associated <a href="http://gist.github.com/439031">NHibernate user types</a>.</p></p>
+<p>Another thing to think about is to not use integers to represent Age. Age generally cannot be negative, unless you have some complex domain, so using a type which allows this may not be the right solution if you are putting conditional checks throughout the system.</p>

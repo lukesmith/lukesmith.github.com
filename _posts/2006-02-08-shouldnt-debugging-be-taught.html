@@ -1,0 +1,66 @@
+---
+layout: post
+title: Shouldn’t debugging be taught?
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+I got home from work this evening and two of my housemates were having coding issues<br />
+with their projects, both of which were schoolboy errors which a little bit of debugging<br />
+would solve. However neither housemate could fix their problems.</p>
+<p>
+One was with C# code similar to below</p>
+<p>
+ArrayList<br />
+al1 = new ArrayList();<br />
+ArrayList al2 = new ArrayList();</p>
+<p>foreach (object bob in somecollection)<br />
+{<br />
+al2.Clear();<br />
+al2.Add(bob);<br />
+al1.Add(al2);<br />
+}</p>
+<p>&gt;</p>
+<p>
+He couldn't figure out why each item in al1 always contained the same values.<br />
+What was happening was each time the foreach loop looped al2 kept the same reference<br />
+to memory, but always cleared its contents so the final value of al2 always contained<br />
+the last bob in somecollection. And because when you add an object to an ArrayList<br />
+you actually add a reference to that objects memory each al2 being added to the<br />
+list always pointed to the same memory. What he needed to do was create a new instance<br />
+of al2 inside the loop and so have its own place in memory.</p>
+<p>
+He had tried a number of hacks to get it to work, without success. Hacking isn't always<br />
+the way to get something to work, actually knowing how to use the debugging tools<br />
+is. By tracing the steps through the loop he could have seen what was happening each<br />
+time, noticing that when al2 was cleared every item in al1 was also cleared (kinda<br />
+gives it away there thats the culprit).</p>
+<p>
+The second problem involved decoding a byte to a string, of length 30. If the actual<br />
+string was less than 30 characters the resulting string contained '' (NULL) characters<br />
+to make up a length of 30. He was then trying to add two strings together (s3 = s1<br />
++ s2) and displaying the output, but only s1 was ever being shown! Once again using<br />
+the debugging tools, he was just outputing s1 and s2 separately which resulting in<br />
+both showing the correct strings, would have shown that the two variables s1 and s2<br />
+contained a number of NULL characters at the end.</p>
+<p>
+I went through university having never been shown about the debugging tools available,<br />
+and how to use them to solve simple and complex problems. It was only through alot<br />
+of non university projects, both at work and in the Imagine Cup, that I discovered<br />
+how to properly use the debugging tools which took extra time which in the workplace<br />
+= $$$. Shouldn't at least the basics of how to properly debug your code be covered<br />
+at university? Give students a VERY buggy application for coursework and ask them<br />
+to submit the fixed code with reasons why they changed certain parts of the code and<br />
+how they discovered that was a bug and what tools they used to discover it? Development<br />
+isn't just about writing code but also about fixing it!</p>
+<p>
+One of my first biggest challenges was debugging C++ code that dealt with EP1<br />
+and EPG teletext files. Out came the old hex editors and <a href="http://www.asciitable.com">asciitable</a> with<br />
+alot of tracing through the functions to figure out what bytes were being<br />
+corrupted and where.</p>
+<p><img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=e3dd0e21-1087-4ed9-8b96-cd8bf5cbc88d" /></p>

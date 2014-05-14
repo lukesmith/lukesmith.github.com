@@ -1,0 +1,47 @@
+---
+layout: post
+title: Updating a pointhq dns record from amazon ec2 instances
+categories:
+- Development
+tags:
+- amazon
+- dns
+- ec2
+- pointhq
+- teamcity
+status: publish
+type: post
+published: true
+meta:
+  _wp_old_slug: updating-a-pointhq-dns-record-from-amazon-ec2-instance
+  twitter_cards_summary_img_size: a:6:{i:0;i:418;i:1;i:266;i:2;i:3;i:3;s:24:"width="418"
+    height="266"";s:4:"bits";i:8;s:4:"mime";s:9:"image/png";}
+author: 
+---
+<p>If you're using Amazon EC2 for any reason, but not running the instance 24/7 (I have an instance with TeamCity that I only want to run on the evenings/weekends when I'm doing any work) you may not want to spend the extra on an Elastic IP to get a static IP address.</p>
+<p>Unless you use Elastic IP however, everytime you start your EC2 instance you get allocated a new dynamic address, annoying if you want to use a friendly hostname. So how can you  get your dns server updated when your instance starts?</p>
+<p>My dns host of choice is <a href="https://pointhq.com/">PointHQ</a>, they give 10 free domains and provide a useful <a href="http://docs.atechmedia.com/point/api">api</a> for managing the zones and records. Theres even a <a href="http://docs.atechmedia.com/point/api/ruby-api-client">ruby gem</a>.</p>
+<h2>Step 1 - Create an A record in PointHQ</h2>
+<p>First of all we need to create the record in Point. For my <a href="http://www.jetbrains.com/teamcity/">TeamCity</a> instance i've created a A record for teamcity.example.com and put a temporary IP address as the records data.</p>
+<p><a href="http://lukesmithnet.files.wordpress.com/2011/05/pointhq-add-record.png"><img class="alignnone size-medium wp-image-272" title="pointhq-add-record" src="http://lukesmithnet.files.wordpress.com/2011/05/pointhq-add-record.png?w=300" alt="" width="300" height="190" /></a></p>
+<h2><strong>Step 2 - Create a ruby script</strong></h2>
+<p>The next step is to create a script that can be run to get the machines current public IP address and then to call the Point api. For this you will need to get your api key from the Point website.</p>
+<p>To get the current IP address of the EC2 instance you need to make a GET request</p>
+<p><code>ip = open('http://169.254.169.254/latest/meta-data/public-ipv4').read</code></p>
+<p>Using the Point ruby gem we now need to get hold of the zone record hosted by Point and update the data with the instances public IP address.<br />
+<code><br />
+zone = Point::Zone.find(&lt;ZoneId&gt;) # example.com<br />
+record = zone.record(&lt;RecordId&gt;) # teamcity.example.com<br />
+record.data = ip<br />
+record.save<br />
+</code></p>
+<p>Run the <a href="https://gist.github.com/974384">ruby script</a> now and check PointHQ. The data field of the A record created in step 1 should now be updated with the public IP address of the EC2 instance.</p>
+<h2>Step 3 - AutoRun the script</h2>
+<p>We've got the script working updating Point, but it's pretty useless if we still need to remote into the server and run it manually. As I'm running on Windows I've used the Task Scheduler to automatically run the ruby script. I couldn't find a way to be notified when the EC2 instance starts so used the following triggers which update Point fairly quickly after starting the instance.</p>
+<ul>
+<li>At system startup</li>
+<li>At log on of any user &lt;- I have a feeling only this one is required</li>
+<li>One time - repeat every 10 minutes</li>
+</ul>
+<p>The only problem I've had is dns caching, which you can flush locally easily. I use <a href="http://www.opendns.com/">opendns</a> which gets updated incredibly quickly and if not theres a handy <a href="http://www.opendns.com/support/cache/">cachecheck</a> + refresh tool.</p>
+<div>Now with hosted <a href="http://www.jetbrains.com/youtrack/">YouTrack</a> from <a href="http://www.jetbrains.com">JetBrains</a>, and <a href="https://github.com/">GitHub</a>, I have a fixed url that I can point to for integrating with <a href="http://www.jetbrains.com/teamcity/">TeamCity</a>.</div>

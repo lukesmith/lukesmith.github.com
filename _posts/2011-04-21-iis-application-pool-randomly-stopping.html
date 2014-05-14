@@ -1,0 +1,22 @@
+---
+layout: post
+title: IIS Application Pool "randomly" stopping
+categories:
+- Development
+- nservicebus
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>This issue has just sent me crazy for the past day. On my development machine the application pool hosting one of our webservices would randomly stop with nothing more than the following error in the System Windows Log</p>
+<blockquote><p>Application pool 'xx' is being automatically disabled due to a series of failures in the process(es) serving that application pool.</p></blockquote>
+<p>Which resulted in subsequent calls to the service returning</p>
+<blockquote><p>HTTP Error 503. The service is unavailable.</p></blockquote>
+<p>Any attempt to attach a debugger to the service was no help, with the debugger becoming detached every 10 seconds when w3wp.exe died.</p>
+<p>The automatic disabling of the app pool turned out to be due to the Rapid-Fail Protection that will stop the application pool after a default of 5 worker process failures. Several suggestions say to just disable Rapid-Fail protection, but this just masks the problem to stop the 503 from occurring.</p>
+<p>With some help from <a href="http://www.chrisforster.com/">Chris Forster</a> I dived into the world of Windows Debugging, looking for any kind of IIS exception that could be causing the worker process to keep failing, which turned up nothing.</p>
+<p><strong>The culprit - NServiceBus</strong></p>
+<p>To cut a long and boring debugging story short, NServiceBus was the culprit. Or rather the user account of the application pool not having the permission to Read or Peek messages from the message queue. On application startup NServiceBus attempts to send a message and read it from the message queue in the background, killing the process after 10 seconds if it is not able to read it back from the queue.</p>

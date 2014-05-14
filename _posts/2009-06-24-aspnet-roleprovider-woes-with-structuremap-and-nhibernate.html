@@ -1,0 +1,23 @@
+---
+layout: post
+title: aspnet RoleProvider woes with StructureMap and NHibernate
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>I just fixed a bug that has plagued me for the last 2 nights. NHibernate was throwing completely random exceptions, rolling back transactions with no real consistency other than always happening on requests made after the application had started and almost always within my RoleProvider. I couldn’t figure out what the heck was happening.</p>
+<p>Some of the exceptions:</p>
+<blockquote><p>“Could not synchronize database state with session”</p>
+<p>“Rollback failed - System.InvalidOperationException: This SqlTransaction has completed; it is no longer usable.”</p>
+<p>“Commit failed - System.NullReferenceException: Object reference not set to an instance of an object.”</p>
+<p>“Could not synchronize database state with session - NHibernate.ADOException: There was a problem converting an IDataReader to NDataReader”</p>
+<p>“System.ObjectDisposedException: Session was disposed of or closed Object name: 'ISession'.”</p>
+</blockquote>
+<p>I’m using <a href="http://structuremap.sourceforge.net/">StructureMap</a> to Dependency Inject an NHibernate.ISession into my NHibernateRepositoryBase class, and inject the repository to my Service class. Because you can’t dependency inject into a AspNet RoleProvider I’m using the StructureMap ObjectFactory.GetInstance&lt;T&gt; to get me an instance of my IUserService. I was placing this in the constructor, setting a private field that was then accessed in all the overridden methods I am implementing.</p>
+<p>And this was what got me.</p>
+<p>The reason that the exceptions would happen on any requests made after the application had started was because <a href="http://msdn.microsoft.com/en-us/library/aa479020.aspx">AspNet Providers</a> are created once per application and reused throughout the duration of the application. This meant when the instance was created it would have a reference to the NHibernate.ISession for that request, but since the ISession is closed in application_endrequest subsequent requests the RoleProvider was now referencing an ISession that was closed.</p>
+<p>My solution was to remove the ObjectFactory.GetInstance&lt;T&gt; field assignments to within each method that needed the service, that way ensuring that the NHibernate.ISession for the current request would be used.</p>

@@ -1,0 +1,54 @@
+---
+layout: post
+title: Next please
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>
+This is a simple thing, but it caught me out briefly. I have some SQL that returns<br />
+3 results</p>
+<p>
+SELECT * FROM table<br />
+<br />
+WHERE field1<br />
+= @param1</p>
+<p>SELECT * FROM table<br />
+<br />
+WHERE field2<br />
+= @param2</p>
+<p>SELECT * FROM table<br />
+<br />
+WHERE field3<br />
+= @param3</p>
+<p>
+Then in my Data Access Layer I do the usual</p>
+<p><font size="1"></p>
+<p>
+while (dr.Read())<br />
+{<br />
+   CustomObject obj = this.PopulateCustomObject(dr);<br />
+}</p></p>
+<p></font>but this was only returning the first SELECT statements result. To get around<br />
+this and return all the data I'd ever want you have to wrap this in a do...while loop&gt;</p>
+<p>
+do<br />
+<br />
+{<br />
+   while (dr.Read())<br />
+   {<br />
+      CustomObject obj = this.PopulateCustomObject(dr);</p>
+<p>      if (obj<br />
+!= null)<br />
+      {<br />
+         objects.Add(obj);<br />
+      }<br />
+   }<br />
+}<br />
+while (dr.NextResult());<font size="1"><br />
+</font></p>
+<p>&gt;<img width="0" height="0" src="http://dasblog.lukesmith.net/aggbug.ashx?id=aa95806f-fa4b-45b5-94d1-ac30d07ddaba" /></p>
