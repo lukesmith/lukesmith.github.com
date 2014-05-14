@@ -1,0 +1,23 @@
+# Dependencies
+markdown:         redcarpet
+pygments:         true
+
+gems:
+  - jekyll-sitemap
+
+# Permalinks
+permalink:        /blog/:year/:month/:day/:title
+
+# Setup
+title:            Luke Smith
+tagline:          "Write today, wrong tomorrow"
+url:              http://www.lukesmith.net
+paginate:         1
+author:
+  name:           Luke Smith
+  url:            https://twitter.com/lukesmith
+  email:          me@lukesmith.net
+
+version:          1.0.0
+github:
+  repo:           https://github.com/lukesmith/lukesmith.github.com
