@@ -10,7 +10,7 @@ status: publish
 type: post
 published: true
 meta: {}
-author: 
+author:
 ---
 <p>I’m currently working on a new project and one of the things I want is an easy deployment process. Rather than wait till I actually want to deploy the site to production to put something in place I’ve decided to build it early and use the same process as part of my CI process. Testing the process early and often will mean any issues will be solved sooner rather than on the day of the release.</p>
 <p>I decided to go with an msi installer, so had 2 choices. Either using a Setup Project, that’s included in Visual Studio, or <a href="http://wix.sourceforge.net/">WiX</a>. <a href="http://wix.sourceforge.net/">WiX</a> is far more powerful, and also doesn’t require Visual Studio being installed on the build machine (Setup Projects aren’t supported by MSBuild and so you have to use devenv.exe to build them…urgh).</p>
@@ -20,22 +20,22 @@ author:
 <p>Download WiX from sourceforge. Make sure you also install <a href="http://wix.sourceforge.net/votive.html">Votive</a> (included in the WiX installer) which will give you support for creating WiX projects inside Visual Studio with full intellisense.</p>
 <h4>Step 2: Create a new WiX project</h4>
 <p>Simple, just as you would any other Visual Studio project.</p>
-<p><a href="http://lukesmithnet.files.wordpress.com/2010/01/image_4.png"><img class="alignnone size-medium wp-image-245" title="image_4" src="http://lukesmithnet.files.wordpress.com/2010/01/image_4.png?w=300" alt="" width="300" height="213" /></a></p>
+<p><a href="{{ site.baseurl }}/public/images/blog/2010/01/image_4.png"><img class="alignnone size-medium wp-image-245" title="image_4" src="{{ site.baseurl }}/public/images/blog/2010/01/image_4_thumb.png" alt="" width="300" height="213" /></a></p>
 <h4>Step 3: Adding the WixIIsExtension</h4>
 <p>WiX provides a template to work with when creating a new project, which is useful. The first thing we need to do is reference to WiXIIsExtension, which provides us with the tasks needed to create websites and virtual directories from the installer. References are added in the same way as any other project reference, via the Solution Explorer.</p>
-<p><a href="http://lukesmithnet.files.wordpress.com/2010/01/image_6.png"><img class="alignnone size-medium wp-image-246" title="image_6" src="http://lukesmithnet.files.wordpress.com/2010/01/image_6.png?w=283" alt="" width="283" height="300" /></a></p>
+<p><a href="{{ site.baseurl }}/public/images/blog/2010/01/image_6.png"><img class="alignnone size-medium wp-image-246" title="image_6" src="{{ site.baseurl }}/public/images/blog/2010/01/image_6_thumb.png" alt="" width="283" height="300" /></a></p>
 <p>&nbsp;</p>
 <p>You then need to add a new xml namespace to the Wix root element in your Product.wxs file. If you don’t do this then I’ve found you cannot make use of the tasks provided by the extension library and will get the error “<em>The Component element contains an unexpected child element 'WebSite'.”</em></p>
 <p>Add the namespace xmlns:iis=”http://schemas.microsoft.com/wix/IIsExtension”.</p>
-<p><a href="http://lukesmithnet.files.wordpress.com/2010/01/image_8.png"><img class="alignnone size-medium wp-image-247" title="image_8" src="http://lukesmithnet.files.wordpress.com/2010/01/image_8.png?w=300" alt="" width="300" height="35" /></a></p>
+<p><a href="{{ site.baseurl }}/public/images/blog/2010/01/image_8.png"><img class="alignnone size-medium wp-image-247" title="image_8" src="{{ site.baseurl }}/public/images/blog/2010/01/image_8_thumb.png" alt="" width="300" height="35" /></a></p>
 <h4>Step 4: Creating the website</h4>
 <p>In the Product.wxs file you can now add a task to create a website in IIS within a Component.</p>
 <p>&nbsp;</p>
 <p>Update the ComponentRef under the Feature Id=”ProductFeature” to point to the Website component, Ctrl+Shift+B and you’ve created an installer that creates a website under IIS.</p>
-<p><a href="http://lukesmithnet.files.wordpress.com/2010/01/image_12.png"><img class="alignnone size-medium wp-image-248" title="image_12" src="http://lukesmithnet.files.wordpress.com/2010/01/image_12.png?w=300" alt="" width="300" height="91" /></a></p>
+<p><a href="{{ site.baseurl }}/public/images/blog/2010/01/image_12.png"><img class="alignnone size-medium wp-image-248" title="image_12" src="{{ site.baseurl }}/public/images/blog/2010/01/image_12_thumb.png" alt="" width="300" height="91" /></a></p>
 <h4>Step 5: Run the installer and view the result</h4>
 <p>Find the installer that is produced in the bin directory and run it. There is no UI for the user to interact with, and a new website is created pointing to C:\Project Files (x86)\WixSampleProject</p>
-<p><a href="http://lukesmithnet.files.wordpress.com/2010/01/image_14.png"><img class="alignnone size-medium wp-image-249" title="image_14" src="http://lukesmithnet.files.wordpress.com/2010/01/image_14.png?w=300" alt="" width="300" height="219" /></a></p>
+<p><a href="{{ site.baseurl }}/public/images/blog/2010/01/image_14.png"><img class="alignnone size-medium wp-image-249" title="image_14" src="{{ site.baseurl }}/public/images/blog/2010/01/image_14_thumb.png" alt="" width="300" height="219" /></a></p>
 <p>&nbsp;</p>
 <p>We’ve not included any files in our installer, for that I use <a href="http://wix.sourceforge.net/manual-wix3/heat.htm">heat</a> which I’ll blog about in a future post.</p>
 <p>Hope you’ve found this helpful</p>
