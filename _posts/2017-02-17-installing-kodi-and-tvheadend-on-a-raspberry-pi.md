@@ -49,7 +49,7 @@ You need to do the above before installing tvheadend, because bintray uses `http
 
 ```shell
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
-echo "deb https://dl.bintray.com/tvheadend/deb jessie stable" | sudo tee -a /etc/apt/sources.list
+echo "deb https://dl.bintray.com/tvheadend/deb jessie release" | sudo tee -a /etc/apt/sources.list
 sudo apt-get update
 sudo apt-get install tvheadend
 ```
