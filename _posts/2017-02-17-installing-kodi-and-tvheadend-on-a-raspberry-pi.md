@@ -59,7 +59,8 @@ You should now be able to connect to your TVHeadend server from remotely via htt
 At this time TVHeadend is running but needs to be configured. If using the [Hauppauge PCTV DVB-S2 Stick 461e](http://amzn.to/2lSrk2s) then the drivers need to be installed. Open up a terminal, or SSH, to the TVHeadend Pi and run
 
 ```shell
-wget ...
+wget https://github.com/OpenELEC/dvb-firmware/blob/master/firmware/dvb-demod-m88ds3103.fw?raw=true
+sudo mv dvb-demod-m88ds3103.fw\?raw\=true /lib/firmware/dvb-demod-m88ds3103.fw
 ```
 
 You may need to reboot the Pi
