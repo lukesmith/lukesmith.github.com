@@ -16,7 +16,7 @@ Starting a new project, if you choose the wrong project name it becomes incredib
 
 Let's take a hypothetical service called CompanyName.PricingAllocator.
 
-It's descriptive of what it does, as long as that's all it ever does. The moment someone extends it, because it's quicker to extend than create a new service, to do something entirely unrelated then the name becomes meaningless if not confusing.
+It's descriptive of what it does, as long as that's all it ever does. The moment someone extends it, because it's "quicker" to extend than create a new service, to do something entirely unrelated then the name becomes meaningless if not confusing.
 
 What if, through good intentions, it's named this way originally but after a period of time the company turns around and says "We can't call it that anymore, that's not the valid terminology for what it does and it has to be renamed"*.  There's the cost of changing not only the code repository, references in CI and other tooling but also the humans who are used to referring to it in the old language.
 
