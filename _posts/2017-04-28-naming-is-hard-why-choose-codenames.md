@@ -28,4 +28,4 @@ Puns or tenuous references, items from a set like cities or animals. Anything th
 
 Back to the original example. Referring to the service that allocates prices as Alligator will soon catch on, people will learn what it does and start using it in conversation. The Readme.md should describe in detail why it exists and what it does. It's then easier to talk about than "The Pricing Allocation Service". And when it's time to replace the service, Crocodile can come along and be deployed side-by-side. 
 
-* this has happened to us recently on a project.  Fortunately we were only a few weeks in to building the service when we were told it needed renaming.
+\* this has happened to us recently on a project.  Fortunately we were only a few weeks in to building the service when we were told it needed renaming.
